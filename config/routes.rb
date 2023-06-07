@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   #member -> :id
   #collection -> sin id
+  #RUTAS
   resources :clients, only: [:create]
 
   resources :isps, only: [:create] do
