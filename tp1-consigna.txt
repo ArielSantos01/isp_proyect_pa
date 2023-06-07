@@ -1,0 +1,60 @@
+Ejercicio:
+1. Permitir el registro de un ISP (Internet Service Provider)
+	post /isps -> devuelve token isp
+	
+2. Cada ISP podrá registrar sus planes de servicio de internet (30mb simétrico, 50mb
+simétrico, etc.)
+	post /plans
+	
+3. Cada cliente se puede registrar y puede contratar planes de internet de cualquier
+ISP, cuya solicitud queda pendiente de aprobación por parte del ISP.
+	post /clients
+	
+	a. Poder listar todos los planes agrupados por ISP. (array de isp con sus planes)
+		get /plans
+		
+	b. Poder solicitar la contratación de cualquier plan de cualquier ISP.
+		post /plans/:id/request -> devuelve el token
+		
+	c. Poder listar las solicitudes rechazadas en el último mes.
+		get /request ->token cliente
+		
+4. El ISP puede aprobar o rechazar la solicitud de contratación del servicio.
+	get /request -> token isp (pendiente)
+	put /request/:id/approve
+	
+5. Una vez aprobada la solicitud y contratado un plan específico, el cliente puede
+solicitar el cambio del mismo, quedando este pedido sujeto a aprobación por parte
+del ISP.
+	
+	
+6. El ISP puede aprobar o rechazar la solicitud de cambio de plan
+	
+######################################################
+Rutas
+Isp: 
+	POST /isps: crear un ISP (registro). -> GENERAR TOKEN (listo)
+	GET /isps/plans: Un isp puede ver solo sus planes. -> envia token(listo)
+	
+Plans:
+	POST /plans: crear un nuevo plan para un ISP específico. -> envia token (listo)
+	GET /plans: listar todos los planes agrupados por ISP. -> (listo)
+	POST /plans/:id/create_request: cliente puede solicitar la contratacion de un plan
+	
+	##POST /plans/:id/change_request
+	
+
+Clients:
+	POST /clients: crear un cliente (registro). -> GENERAR TOKEN (listo)
+	POST /clients/:id/requests: solicitar la contratación de un plan de cualquier ISP. (listo)
+
+Request:
+	GET /request/rejected: listar las solicitudes rechazadas en el último mes. ->token cliente (listo)
+	GET /requests: listar solicitudes de los clientes-> token isp (listo)
+	PUT /requests/:id/approve: aprobar una solicitud de contratación. ->token isp (listo) ->comprueba si es solicitud de cambio
+	PUT /requests/:id/reject: rechazar una solicitud de contratación. -> token isp (listo)
+
+
+
+
+
